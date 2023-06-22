@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2023 a las 20:26:33
+-- Tiempo de generación: 17-06-2023 a las 06:49:52
 -- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,8 +49,8 @@ INSERT INTO `agentedesalud` (`DNI`, `matricula`) VALUES
 
 CREATE TABLE `aplicacion` (
   `idAplicacion` int(11) NOT NULL,
-  `DNI` int(11) NOT NULL,
-  `matricula` int(11) NOT NULL,
+  `DNIPaciente` int(11) NOT NULL,
+  `DNIAgente` int(11) NOT NULL,
   `numeroDeSerie` int(11) NOT NULL,
   `fechaDeAplicacion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -59,16 +59,17 @@ CREATE TABLE `aplicacion` (
 -- Volcado de datos para la tabla `aplicacion`
 --
 
-INSERT INTO `aplicacion` (`idAplicacion`, `DNI`, `matricula`, `numeroDeSerie`, `fechaDeAplicacion`) VALUES
-(1, 34000000, 10000, 1, '2023-09-05'),
-(2, 34000001, 10001, 6, '2023-09-05'),
-(3, 34000002, 10002, 11, '2023-09-05'),
-(4, 34000003, 10000, 16, '2023-09-05'),
-(5, 34000004, 10001, 2, '2023-09-05'),
-(6, 34000005, 10002, 7, '2023-09-05'),
-(7, 34000006, 10000, 12, '2023-09-05'),
-(8, 34000007, 10001, 17, '2023-09-05'),
-(9, 34000008, 10002, 3, '2023-09-05');
+INSERT INTO `aplicacion` (`idAplicacion`, `DNIPaciente`, `DNIAgente`, `numeroDeSerie`, `fechaDeAplicacion`) VALUES
+(1, 34000000, 34000007, 1, '2023-09-05'),
+(2, 34000001, 34000008, 6, '2023-09-05'),
+(3, 34000002, 34000009, 11, '2023-09-05'),
+(4, 34000003, 34000007, 16, '2023-09-05'),
+(5, 34000004, 34000008, 2, '2023-09-05'),
+(6, 34000005, 34000009, 7, '2023-09-05'),
+(7, 34000006, 34000008, 12, '2023-09-05'),
+(8, 34000007, 34000009, 17, '2023-09-05'),
+(9, 34000008, 34000007, 3, '2023-09-05'),
+(10, 34000009, 34000008, 13, '2023-09-05');
 
 -- --------------------------------------------------------
 
@@ -150,11 +151,11 @@ INSERT INTO `depositoprovincial` (`idDepositoProvincial`, `longitud`, `latitud`)
 
 CREATE TABLE `descarte` (
   `idDescarte` int(11) NOT NULL,
-  `matricula` int(11) NOT NULL,
+  `DNIAgente` int(11) NOT NULL,
   `numeroDeSerie` int(11) NOT NULL,
   `empresaDescartante` varchar(50) NOT NULL,
   `motivo` varchar(50) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidadDeVacunas` int(11) NOT NULL,
   `fechaDeDescarte` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -162,10 +163,10 @@ CREATE TABLE `descarte` (
 -- Volcado de datos para la tabla `descarte`
 --
 
-INSERT INTO `descarte` (`idDescarte`, `matricula`, `numeroDeSerie`, `empresaDescartante`, `motivo`, `cantidad`, `fechaDeDescarte`) VALUES
-(1, 10000, 19, 'Descarte Seguro SA', 'Rotura de caja', 10, '2023-06-15'),
-(2, 10001, 2, 'Descarte Seguro SA', 'Rotura de vacuna', 1, '2023-06-15'),
-(3, 10002, 8, 'Descarte Seguro SA', 'Rotura de caja', 10, '2023-06-15');
+INSERT INTO `descarte` (`idDescarte`, `DNIAgente`, `numeroDeSerie`, `empresaDescartante`, `motivo`, `cantidadDeVacunas`, `fechaDeDescarte`) VALUES
+(1, 34000007, 19, 'Descarte Seguro SA', 'Rotura de caja', 10, '2023-06-15'),
+(2, 34000008, 2, 'Descarte Seguro SA', 'Rotura de vacuna', 1, '2023-06-15'),
+(3, 34000009, 8, 'Descarte Seguro SA', 'Rotura de caja', 10, '2023-06-15');
 
 -- --------------------------------------------------------
 
@@ -204,7 +205,7 @@ CREATE TABLE `loteinterno` (
   `numeroDeSerie` int(11) NOT NULL,
   `numeroDeLote` int(11) NOT NULL,
   `idLaboratorio` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidadDeVacunas` int(11) NOT NULL,
   `fechaDeLlegadaDepositoNacional` date DEFAULT NULL,
   `idDepositoNacional` int(11) DEFAULT NULL,
   `fechaDeSalidaDepositoNacional` date DEFAULT NULL,
@@ -219,7 +220,7 @@ CREATE TABLE `loteinterno` (
 -- Volcado de datos para la tabla `loteinterno`
 --
 
-INSERT INTO `loteinterno` (`numeroDeSerie`, `numeroDeLote`, `idLaboratorio`, `cantidad`, `fechaDeLlegadaDepositoNacional`, `idDepositoNacional`, `fechaDeSalidaDepositoNacional`, `fechaDeLlegadaDepositoProvincial`, `idDepositoProvincial`, `fechaDeSalidaDepositoProvincial`, `fechaDeLlegadaCentroDeVacunacion`, `idCentroDeVacunacion`) VALUES
+INSERT INTO `loteinterno` (`numeroDeSerie`, `numeroDeLote`, `idLaboratorio`, `cantidadDeVacunas`, `fechaDeLlegadaDepositoNacional`, `idDepositoNacional`, `fechaDeSalidaDepositoNacional`, `fechaDeLlegadaDepositoProvincial`, `idDepositoProvincial`, `fechaDeSalidaDepositoProvincial`, `fechaDeLlegadaCentroDeVacunacion`, `idCentroDeVacunacion`) VALUES
 (1, 1, 1, 5, '2023-02-01', 1, '2023-03-01', '2023-04-01', 1, '2023-05-01', '2023-06-01', 1),
 (2, 1, 1, 5, '2023-02-01', 1, '2023-03-01', '2023-04-01', 1, '2023-05-01', '2023-06-01', 1),
 (3, 2, 1, 5, '2023-02-01', 2, '2023-03-01', '2023-04-01', 2, '2023-05-01', '2023-06-01', 2),
@@ -252,7 +253,7 @@ CREATE TABLE `loteproveedor` (
   `idLaboratorio` int(11) NOT NULL,
   `tipoDeVacuna` varchar(25) NOT NULL,
   `nombreComercial` varchar(50) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidadDeLoteInternos` int(11) NOT NULL,
   `fechaDeFabricacion` date NOT NULL,
   `fechaDeVencimiento` date NOT NULL,
   `fechaDeCompra` date NOT NULL
@@ -262,7 +263,7 @@ CREATE TABLE `loteproveedor` (
 -- Volcado de datos para la tabla `loteproveedor`
 --
 
-INSERT INTO `loteproveedor` (`numeroDeLote`, `idLaboratorio`, `tipoDeVacuna`, `nombreComercial`, `cantidad`, `fechaDeFabricacion`, `fechaDeVencimiento`, `fechaDeCompra`) VALUES
+INSERT INTO `loteproveedor` (`numeroDeLote`, `idLaboratorio`, `tipoDeVacuna`, `nombreComercial`, `cantidadDeLoteInternos`, `fechaDeFabricacion`, `fechaDeVencimiento`, `fechaDeCompra`) VALUES
 (1, 1, 'vac A', 'Vacuna A', 10, '2022-01-01', '2027-01-01', '2023-01-01'),
 (1, 2, 'vac A', 'Vacuna A', 10, '2022-01-01', '2027-01-01', '2023-01-01'),
 (1, 3, 'vac A', 'Vacuna A', 10, '2022-01-01', '2027-01-01', '2023-01-01'),
@@ -273,32 +274,6 @@ INSERT INTO `loteproveedor` (`numeroDeLote`, `idLaboratorio`, `tipoDeVacuna`, `n
 (2, 3, 'vac B', 'Vacuna B', 10, '2022-01-01', '2027-01-01', '2023-01-01'),
 (2, 4, 'vac B', 'Vacuna B', 10, '2022-01-01', '2027-01-01', '2023-01-01'),
 (2, 5, 'vac B', 'Vacuna B', 10, '2022-01-01', '2027-01-01', '2023-01-01');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `paciente`
---
-
-CREATE TABLE `paciente` (
-  `DNI` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `paciente`
---
-
-INSERT INTO `paciente` (`DNI`) VALUES
-(34000000),
-(34000001),
-(34000002),
-(34000003),
-(34000004),
-(34000005),
-(34000006),
-(34000007),
-(34000008),
-(34000009);
 
 -- --------------------------------------------------------
 
@@ -423,17 +398,18 @@ INSERT INTO `traslado` (`idTraslado`, `numeroDeSerie`, `idCentroDeVacunacion`, `
 -- Indices de la tabla `agentedesalud`
 --
 ALTER TABLE `agentedesalud`
-  ADD PRIMARY KEY (`matricula`),
-  ADD UNIQUE KEY `DNI` (`DNI`);
+  ADD PRIMARY KEY (`DNI`),
+  ADD UNIQUE KEY `DNI` (`DNI`),
+  ADD UNIQUE KEY `matricula` (`matricula`);
 
 --
 -- Indices de la tabla `aplicacion`
 --
 ALTER TABLE `aplicacion`
   ADD PRIMARY KEY (`idAplicacion`),
-  ADD KEY `DNI` (`DNI`),
+  ADD KEY `DNI` (`DNIPaciente`),
   ADD KEY `numeroDeSerie` (`numeroDeSerie`),
-  ADD KEY `matricula` (`matricula`);
+  ADD KEY `DNIAgente` (`DNIAgente`);
 
 --
 -- Indices de la tabla `centrodevacunacion`
@@ -459,7 +435,7 @@ ALTER TABLE `depositoprovincial`
 ALTER TABLE `descarte`
   ADD PRIMARY KEY (`idDescarte`),
   ADD KEY `numeroDeSerie` (`numeroDeSerie`),
-  ADD KEY `matricula` (`matricula`);
+  ADD KEY `descarte_ibfk_2` (`DNIAgente`);
 
 --
 -- Indices de la tabla `laboratorio`
@@ -484,12 +460,6 @@ ALTER TABLE `loteinterno`
 ALTER TABLE `loteproveedor`
   ADD PRIMARY KEY (`numeroDeLote`,`idLaboratorio`),
   ADD KEY `idLaboratorio` (`idLaboratorio`);
-
---
--- Indices de la tabla `paciente`
---
-ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`DNI`);
 
 --
 -- Indices de la tabla `patologiabase`
@@ -525,7 +495,7 @@ ALTER TABLE `traslado`
 -- AUTO_INCREMENT de la tabla `aplicacion`
 --
 ALTER TABLE `aplicacion`
-  MODIFY `idAplicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idAplicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `centrodevacunacion`
@@ -583,16 +553,16 @@ ALTER TABLE `agentedesalud`
 -- Filtros para la tabla `aplicacion`
 --
 ALTER TABLE `aplicacion`
-  ADD CONSTRAINT `aplicacion_ibfk_1` FOREIGN KEY (`DNI`) REFERENCES `paciente` (`DNI`),
+  ADD CONSTRAINT `aplicacion_ibfk_1` FOREIGN KEY (`DNIPaciente`) REFERENCES `persona` (`DNI`),
   ADD CONSTRAINT `aplicacion_ibfk_3` FOREIGN KEY (`numeroDeSerie`) REFERENCES `loteinterno` (`numeroDeSerie`),
-  ADD CONSTRAINT `aplicacion_ibfk_4` FOREIGN KEY (`matricula`) REFERENCES `agentedesalud` (`matricula`);
+  ADD CONSTRAINT `aplicacion_ibfk_4` FOREIGN KEY (`DNIAgente`) REFERENCES `agentedesalud` (`DNI`);
 
 --
 -- Filtros para la tabla `descarte`
 --
 ALTER TABLE `descarte`
   ADD CONSTRAINT `descarte_ibfk_1` FOREIGN KEY (`numeroDeSerie`) REFERENCES `loteinterno` (`numeroDeSerie`),
-  ADD CONSTRAINT `descarte_ibfk_2` FOREIGN KEY (`matricula`) REFERENCES `agentedesalud` (`matricula`);
+  ADD CONSTRAINT `descarte_ibfk_2` FOREIGN KEY (`DNIAgente`) REFERENCES `agentedesalud` (`DNI`);
 
 --
 -- Filtros para la tabla `loteinterno`
@@ -609,12 +579,6 @@ ALTER TABLE `loteinterno`
 --
 ALTER TABLE `loteproveedor`
   ADD CONSTRAINT `loteproveedor_ibfk_1` FOREIGN KEY (`idLaboratorio`) REFERENCES `laboratorio` (`idLaboratorio`);
-
---
--- Filtros para la tabla `paciente`
---
-ALTER TABLE `paciente`
-  ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`DNI`) REFERENCES `persona` (`DNI`);
 
 --
 -- Filtros para la tabla `patologiabase`
